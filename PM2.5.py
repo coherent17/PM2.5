@@ -39,20 +39,18 @@ def gradient_descent(X,T,theta,learning_rate,iteration):
     return theta,cost_function
 
 #rmse
-def predict_error(theta,X,T):
+def rmse(y1,y2):
     error=0
-    for i in range(0,len(X)):
-        error+=(hypothesis(theta,X[j])-T[j])**2
-    return error/len(X)
+    for i in range(len(y1)):
+        error+=(y1[i]-y2[i])**2
+    return math.sqrt(error/len(y1))
 
-learning_rate=0.0000001
+learning_rate=0.0000005
 theta=[0]*18
-iteration=500
+iteration=1000
 
 X_train,X_test,T_train,T_test = train_test_split(dataX,dataT, test_size = 0.2)
 #train:876 test:220
-
-
 
 print("Initial state:")
 print("theta=",theta)
@@ -61,7 +59,7 @@ theta,cost_function=gradient_descent(X_train,T_train,theta,learning_rate,iterati
 print("Final state:")
 print("theta=",theta)
 
-
+#plot the cost function
 for i in range(0,len(cost_function)):
     plt.plot(i,cost_function[i],'b.')
 plt.title("cost function versus iteration times")
@@ -76,6 +74,10 @@ for i in range(0,len(X_train)):
     y.append(hypothesis(theta,X_train[i]))
 plt.plot(x,y,color='red',lw=1.0,ls='-',label="training_predict_value")
 plt.plot(x,T_train,color='blue',lw=1.0,ls='-',label="target_value")
+plt.text(0,0,"RMSE=%.3lf" %(rmse(T_train,y)))
+plt.xlabel("the nth data")
+plt.ylabel("PM2.5")
+plt.title("Linear regression (M=1) training")
 plt.legend()
 plt.show()
 
@@ -86,5 +88,9 @@ for i in range(0,len(X_test)):
     y.append(hypothesis(theta,X_test[i]))
 plt.plot(x,y,color='red',lw=1.0,ls='-',label="testing_predict_value")
 plt.plot(x,T_test,color='blue',lw=1.0,ls='-',label="target_value")
+plt.text(0,0,"RMSE=%.3lf" %(rmse(T_test,y)))
+plt.xlabel("the nth data")
+plt.ylabel("PM2.5")
+plt.title("Linear regression (M=1) testing")
 plt.legend()
 plt.show()
