@@ -13,11 +13,14 @@ def train_test_split(X,Y,test_size):
     Y_test=Y[math.floor(len(Y)*(1-test_size)):]
     return X_train, X_test, Y_train, Y_test
 
-#need to be think about it
+#need to be think about
 def hypothesis(theta,X):
     value=0
-    for i in range(0,len(theta)):
+    for i in range(0,18):
         value+=theta[i]*X[i]
+    for i in range(1,18):
+        for j in range(1,i):
+            value+=theta[i+17]*X[i]*X[j]
     return value
 
 def square_error(theta,X,T):
@@ -30,11 +33,11 @@ def gradient_descent(X,T,theta,learning_rate,iteration):
     N=len(X)
     cost_function=[]
     for i in range(iteration):
-        theta_grad=[0]*len(X[0])
+        theta_grad=[0]*len(theta)
         for j in range(0,N):
-            for k in range(0,len(X[0])):
+            for k in range(0,len(theta)):
                 theta_grad[k]+=(1/N)*(hypothesis(theta,X[j])-T[j])*X[j,k]
-            for k in range(0,len(X[0])):
+            for k in range(0,len(theta)):
                 theta[k]-=learning_rate*theta_grad[k]
         cost_function.append(square_error(theta,X_train,T_train))
     return theta,cost_function
@@ -47,8 +50,8 @@ def rmse(y1,y2):
     return math.sqrt(error/len(y1))
 
 learning_rate=0.0000005
-theta=[0]*18
-iteration=1000
+theta=[0]*171
+iteration=10
 
 X_train,X_test,T_train,T_test = train_test_split(dataX,dataT, test_size = 0.2)
 #train:876 test:220
