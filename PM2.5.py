@@ -69,8 +69,22 @@ plt.xlabel("iteration times")
 plt.ylabel("cost function")
 plt.show()
 
-#plot the value of the model predict and the actual model
+#plot the value of the model predict and the actual model (train part)
+x=np.arange(0,len(X_train))
+y=[]
+for i in range(0,len(X_train)):
+    y.append(hypothesis(theta,X_train[i]))
+plt.plot(x,y,color='red',lw=1.0,ls='-',label="training_predict_value")
+plt.plot(x,T_train,color='blue',lw=1.0,ls='-',label="target_value")
+plt.legend()
+plt.show()
+
+#plot the value of the model predict and the actual model (test part)
+x=np.arange(0,len(X_test))
+y=[]
 for i in range(0,len(X_test)):
-    plt.plot(i,T_test[i],'r_')
-    plt.plot(i,hypothesis(theta,X_test[i]),'y_')
+    y.append(hypothesis(theta,X_test[i]))
+plt.plot(x,y,color='red',lw=1.0,ls='-',label="testing_predict_value")
+plt.plot(x,T_test,color='blue',lw=1.0,ls='-',label="target_value")
+plt.legend()
 plt.show()
