@@ -3,9 +3,11 @@ import numpy as np
 import matplotlib.pyplot as plt 
 import math
 
+#read the data which X features has add a new line 1 so means X_0
 dataT=np.genfromtxt('data_T.csv',delimiter=',')
 dataX=np.genfromtxt('data_X.csv',delimiter=',')
 
+#split the data into training set and the testing set
 def train_test_split(X,Y,test_size):
     X_train=X[:math.floor(len(X)*(1-test_size))]
     Y_train=Y[:math.floor(len(Y)*(1-test_size))]
@@ -19,7 +21,7 @@ def hypothesis(theta,X):
     for i in range(0,18):
         value+=theta[i]*X[i]
     for i in range(1,18):
-        for j in range(1,i):
+        for j in range(1,i+1):
             value+=theta[i+17]*X[i]*X[j]
     return value
 
@@ -36,7 +38,12 @@ def gradient_descent(X,T,theta,learning_rate,iteration):
         theta_grad=[0]*len(theta)
         for j in range(0,N):
             for k in range(0,len(theta)):
-                theta_grad[k]+=(1/N)*(hypothesis(theta,X[j])-T[j])*X[j,k]
+                if k<len(X[0]):
+                    theta_grad[k]+=(1/N)*(hypothesis(theta,X[j])-T[j])*X[j,k]
+                else:
+                    for m in range(1,18):
+                        for n in range(1,m+1):
+                            theta_grad[k]+=(1/N)*(hypothesis(theta,X[j])-T[j])*X[j,m]*X[j,n]
             for k in range(0,len(theta)):
                 theta[k]-=learning_rate*theta_grad[k]
         cost_function.append(square_error(theta,X_train,T_train))
@@ -49,14 +56,17 @@ def rmse(y1,y2):
         error+=(y1[i]-y2[i])**2
     return math.sqrt(error/len(y1))
 
-learning_rate=0.0000005
+learning_rate=0.00000001
 theta=[0]*171
 iteration=10
 
-X_train,X_test,T_train,T_test = train_test_split(dataX,dataT, test_size = 0.2)
+X_train,X_test,T_train,T_test = train_test_split(dataX,dataT, test_size = 0.5)
 #train:876 test:220
 
-print("Initial state:")
+gradient_descent(X_train[0],T_train, theta, learning_rate, iteration)
+
+
+'''print("Initial state:")
 print("theta=",theta)
 print("Running for the method of gradient descent")
 theta,cost_function=gradient_descent(X_train,T_train,theta,learning_rate,iteration)
@@ -97,4 +107,4 @@ plt.xlabel("the nth data")
 plt.ylabel("PM2.5")
 plt.title("Linear regression (M=1) testing")
 plt.legend()
-plt.show()
+plt.show()'''
