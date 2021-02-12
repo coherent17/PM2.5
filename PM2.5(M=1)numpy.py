@@ -56,13 +56,13 @@ theta,cost_function=gradient_descent(theta,X_train,T_train,learning_rate,iterati
 print("Final state:")
 print("theta=",theta)
 
-# #plot the cost function versus iteration times
-# for i in range(0,len(cost_function)):
-#     plt.plot(i,cost_function[i],'b.')
-# plt.title("cost function versus iteration times")
-# plt.xlabel("iteration times")
-# plt.ylabel("cost function")
-# plt.show()
+#plot the cost function versus iteration times
+for i in range(0,len(cost_function)):
+    plt.plot(i,cost_function[i],'b.')
+plt.title("cost function versus iteration times")
+plt.xlabel("iteration times")
+plt.ylabel("cost function")
+plt.show()
 
 #plot the value of the model predict and the actual model (train part)
 x=np.arange(0,len(X_train))
