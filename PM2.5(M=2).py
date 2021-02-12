@@ -231,7 +231,7 @@ def rmse(y1,y2):
 #setting the parameter
 learning_rate=0.00001
 theta=[0]*171
-iteration=1
+iteration=3
 
 #split the dataset into training dataset and testing dataset
 X_train,X_test,T_train,T_test = train_test_split(dataX,dataT, test_size = 0.1)
