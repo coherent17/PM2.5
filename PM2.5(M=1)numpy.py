@@ -23,24 +23,20 @@ def train_test_split(X,Y,test_size):
 def hypothesis(theta,X):
     return np.matmul(theta,np.transpose(X))
 
-def gradient_descent(theta,X,T,iteration):
+def gradient_descent(theta,X,T,learning_rate,iteration):
     N=len(X)
     for i in range(iteration):
-        theta_grad=np.zeros((1,N))
-        for j in range(0,N):
-            theta_grad[]+=(1/N)*(hypothesis(theta,X)-T)*X[j,:]
+        theta_grad=(1/N)*np.dot((hypothesis(theta,X)-T),(X))
+        theta-=learning_rate*theta_grad
     return theta
 
 X_train,X_test,T_train,T_test = train_test_split(dataX,dataT, test_size = 0.2)
 T_train=T_train.reshape(1,876)
 theta=np.ones((1,18))
 
-
-temp=gradient_descent(theta,X_train,T_train,1)
-# print(np.shape(theta))
-# print(np.shape(T_train))
-# print(np.shape(X_train))
-# print(np.shape(hypothesis(theta,X_train)))
-# print(temp)
-# print(np.shape(temp))
-# print(len(X_train))
+temp=gradient_descent(theta,X_train,T_train,0.00001,100)
+print(temp)
+ #theta:[[1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1.]] shape: (1, 18)
+ #X_train shape: (876, 18)
+ #np.transpose(X_train) shape: (18, 876)
+ #hypothesis(theta,X_train) shape: (1, 876)
