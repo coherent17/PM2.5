@@ -29,12 +29,14 @@ def hypothesis(theta,X):
 def gradient_descent(theta,X,T,learning_rate,iteration):
     N=len(X)
     cost_function=[]
-    for i in range(iteration):
+    for i in range(1,iteration+1):
+        if i ==1:
+            print("before iteration, rmse is %.8lf and cost function is %.8lf" %(rmse(hypothesis(theta,X).reshape(len(X),),T),np.sum((hypothesis(theta,X)-T)**2)/len(X)/2))
         cost_function.append(np.sum((hypothesis(theta,X)-T)**2)/len(X)/2)
         theta_grad=(1/N)*np.matmul((hypothesis(theta,X)-T),(X))
         theta-=learning_rate*theta_grad
-        if i %10000==0:
-            print("it is the %d time of iterations, rmse is %.10lf and cost function is %.10lf" %(i,rmse(hypothesis(theta,X),T),np.sum((hypothesis(theta,X)-T)**2)/len(X)/2))
+        if i %(iteration/10)==0:
+            print("it is the %d time of iterations, rmse is %.8lf and cost function is %.8lf" %(i,rmse(hypothesis(theta,X).reshape(len(X),),T),np.sum((hypothesis(theta,X)-T)**2)/len(X)/2))
     return theta,cost_function,theta_grad
 
 #error calculation: root mean square error
@@ -43,7 +45,7 @@ def rmse(a,b):
 
 #parameter:
 learning_rate=0.00003923
-iteration=100000
+iteration=500000
 theta=np.zeros((1,18))
 
 #split the data into training set and the testing set
@@ -56,8 +58,6 @@ print("Running for the method of gradient descent")
 theta,cost_function,theta_grad=gradient_descent(theta,X_train,T_train,learning_rate,iteration)
 print("Final state:")
 print("theta=",theta)
-print(theta_grad)
-print(np.shape(theta_grad))
 
 end_time=time.time()
 print("the runtime of this program:%.3lf" %(end_time-start_time))

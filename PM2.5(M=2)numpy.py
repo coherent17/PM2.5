@@ -37,12 +37,14 @@ def hypothesis(theta,X):
 def gradient_descent(theta,X,T,learning_rate,iteration):
     N=len(X)
     cost_function=[]
-    for i in range(iteration):
+    for i in range(1,iteration+1):
+        if i ==1:
+            print("before iteration, rmse is %.8lf and cost function is %.8lf" %(rmse(hypothesis(theta,X).reshape(len(X),),T),np.sum((hypothesis(theta,X)-T)**2)/len(X)/2))
         cost_function.append(np.sum((hypothesis(theta,X)-T)**2)/len(X)/2)
         theta_grad=(1/N)*np.matmul((hypothesis(theta,X)-T),(X))
         theta-=learning_rate*theta_grad
-        if i %10000==0:
-            print("it is the %d time of iterations, rmse is %.10lf and cost function is %.10lf" %(i,rmse(hypothesis(theta,X),T),np.sum((hypothesis(theta,X)-T)**2)/len(X)/2))
+        if i %(iteration/10)==0:
+            print("it is the %d time of iterations, rmse is %.8lf and cost function is %.8lf" %(i,rmse(hypothesis(theta,X).reshape(len(X),),T),np.sum((hypothesis(theta,X)-T)**2)/len(X)/2))
     return theta,cost_function
 
 #root mean square error
@@ -64,6 +66,9 @@ print("Running for the method of gradient descent")
 theta,cost_function=gradient_descent(theta,X_train,T_train,learning_rate,iteration)
 print("Final state:")
 print("theta=",theta)
+
+end_time=time.time()
+print("the runtime of this program:%.3lf" %(end_time-start_time))
 
 #plot the cost function versus iteration times
 x=np.arange(0,len(cost_function))
@@ -98,6 +103,3 @@ plt.ylabel("PM2.5")
 plt.title("Linear regression (M=2) testing")
 plt.legend()
 plt.show()
-
-end_time=time.time()
-print("the runtime of this program:%.3lf" %(end_time-start_time))
