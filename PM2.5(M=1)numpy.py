@@ -44,9 +44,10 @@ def rmse(a,b):
     return math.sqrt(np.sum((a-b)**2)/len(a))
 
 #parameter:
-learning_rate=0.00003923
-iteration=500000
-theta=np.zeros((1,18))
+#temp:0.00003923
+learning_rate=0.000039235
+iteration=200000
+theta=np.ones((1,18))
 
 #split the data into training set and the testing set
 X_train,X_test,T_train,T_test = train_test_split(dataX,dataT, test_size = 0.2)
@@ -95,3 +96,15 @@ plt.ylabel("PM2.5")
 plt.title("Linear regression (M=1) testing")
 plt.legend()
 plt.show()
+
+#plot the weight versus the feature
+x=np.arange(0,18)
+theta_temp=theta.reshape(18,)
+plt.plot(x,theta_temp,"r.")
+labels=["const","AMB_TEMP","CH4","CO","NMHC","NO","NO2","NOx","O3","PM10","RAINFALL","RH","SO2","THC","WD_HR","WIND_DIREC","WIND_SPEED","WS_HR"]
+plt.xticks(x,labels,rotation='vertical')
+plt.ylabel("weight")
+plt.title("weights versus features")
+plt.show()
+
+#remove each feature will how to affect the model?

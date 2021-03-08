@@ -53,7 +53,7 @@ def rmse(a,b):
 
 #parameter:
 learning_rate=0.00000000003
-iteration=500000
+iteration=50000
 theta=np.zeros((1,171))
 
 #split the data into training set and the testing set
