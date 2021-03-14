@@ -2,14 +2,14 @@
 import numpy as np 
 import matplotlib.pyplot as plt 
 import math
-import time
+import random
 
-#calculate the runtime of the program
-start_time = time.time()
-
-#read the data which X features has add a new line 1 so means X_0
-dataT=np.genfromtxt('data_T.csv',delimiter=',')
-dataX=np.genfromtxt('data_X.csv',delimiter=',')
+#data preprocesing:
+#feature data
+dataX=np.genfromtxt("dataset_X.csv",delimiter=',')
+dataX=np.delete(dataX,[0],axis=1)
+temp=np.array([1]*len(dataX))
+dataX=np.c_[temp,dataX]
 
 #append the dataX to match the theta (171 features)
 k=18
@@ -18,6 +18,17 @@ for i in range(1,18):
         if k in range(18,171):
             dataX=np.insert(dataX,k,values=dataX[:,i]*dataX[:,j],axis=1)
             k+=1
+
+#target data
+dataT=np.genfromtxt("dataset_T.csv",delimiter=',')
+dataT=np.delete(dataT,[0],axis=1)
+
+#shuffle the data to avoid the strange distribution
+#concatenate the feature and target matrix and shuffle together
+data_temp=np.c_[dataT,dataX]
+np.random.shuffle(data_temp)
+dataT=data_temp[:,0]
+dataX=np.delete(data_temp,[0],axis=1)
 
 #split the data into training set and the testing set
 def train_test_split(X,Y,test_size):
@@ -66,9 +77,6 @@ print("Running for the method of gradient descent")
 theta,cost_function=gradient_descent(theta,X_train,T_train,learning_rate,iteration)
 print("Final state:")
 print("theta=",theta)
-
-end_time=time.time()
-print("the runtime of this program:%.3lf" %(end_time-start_time))
 
 #plot the cost function versus iteration times
 x=np.arange(0,len(cost_function))
