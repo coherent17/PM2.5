@@ -118,7 +118,7 @@ plt.plot(x,theta_temp,"r.")
 labels=["const","AMB_TEMP","CH4","CO","NMHC","NO","NO2","NOx","O3","PM10","RAINFALL","RH","SO2","THC","WD_HR","WIND_DIREC","WIND_SPEED","WS_HR"]
 plt.xticks(x,labels,rotation='vertical')
 plt.ylabel("weight")
-plt.title("weights versus features")
+plt.title("weights versus features (M=1)")
 plt.show()
 
 #remove each feature will how to affect the model?
