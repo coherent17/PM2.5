@@ -49,8 +49,6 @@ def gradient_descent(theta,X,T,learning_rate,iteration):
             print("it is the %d time of iterations, rmse is %.8lf and cost function is %.8lf" %(i,rmse(hypothesis(theta,X).reshape(len(X),),T),np.sum((hypothesis(theta,X)-T)**2)/len(X)/2))
     return theta,cost_function,theta_grad
 
-
-
 def gradient_descent_remove(theta,X,T,learning_rate,iteration):
     N=len(X)
     for i in range(1,iteration+1):
@@ -62,13 +60,9 @@ def gradient_descent_remove(theta,X,T,learning_rate,iteration):
 def rmse(a,b):
     return math.sqrt(np.sum((a-b)**2)/len(a))
 
-#error calculation: root mean square error
-def rmse(a,b):
-    return math.sqrt(np.sum((a-b)**2)/len(a))
-
 #parameter:
-learning_rate=0.0000039
-iteration=30000
+learning_rate=0.000035
+iteration=10000
 theta=np.zeros((1,18))
 
 #split the data into training set and the testing set
